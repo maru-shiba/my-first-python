@@ -22,15 +22,17 @@ with open("README.md", "w", encoding="utf-8") as f:
             f.write("> **" + log_entry + "** \n")
             f.write("> (※Pythonプログラムにより自動更新中！)\n")
 
-# 4. GitのコマンドをPythonから自動で実行する（少し強力な書き方に変更）
+# --- 修正版：GitHubへ自動送信 ---
 print("\n--- GitHubへ自動送信中... ---")
-
-# 1つずつ確実に実行し、結果を画面に出すようにします
 import subprocess
 
+# 1. 「今のフォルダにあるもの全部」を対象にする
+subprocess.run(["git", "add", "."], shell=True)
 
-subprocess.run(["git", "add", "."])  
-subprocess.run(["git", "commit", "-m", "Auto-update medaka log"])
-subprocess.run(["git", "push", "origin", "main"])
+# 2. メッセージをつけて確定
+subprocess.run(["git", "commit", "-m", "Auto-update medaka log"], shell=True)
+
+# 3. 強制的に送信
+subprocess.run(["git", "push", "origin", "main"], shell=True)
 
 print("\nすべて完了！今度こそGitHubを確認してみてね。")
